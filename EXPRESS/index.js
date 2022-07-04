@@ -21,8 +21,15 @@ app.get("/blog/:artigo?", function (req, res) {
     res.send("bem vindo ao blog!")
 });
 
-app.get("/canal", function (req, res) {
-    res.send("<h1>bem vindo ao canal!</h1>")
+
+//QUERY PARAMS
+app.get("/canal/youtube", function (req, res) {
+    var canal = req.query["canal"];
+    if (canal) {
+        res.send(canal)
+    } else {
+        res.send("Nenhum canal fornecido!")
+    }
 });
 
 
