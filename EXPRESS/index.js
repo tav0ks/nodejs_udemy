@@ -46,5 +46,4 @@ app.listen(8000, function (erro) {
     } else {
         console.log("servidor iniciado com sucesso!")
     }
-})
-
+});
