@@ -24,7 +24,11 @@ app.use(bodyParser.json()); // transforma dados do formulario json para javascri
 
 //rotas
 app.get("/", (req, res) => {
-    res.render("index");
+    Pergunta.findAll({ raw: true }).then(perguntas => { //SELECT
+        res.render("index", {
+            perguntas: perguntas
+        });
+    });
 });
 
 app.get("/perguntar", (req, res) => {
@@ -34,7 +38,7 @@ app.get("/perguntar", (req, res) => {
 app.post("/salvarpergunta", (req, res) => {
     var titulo = req.body.titulo;
     var descricao = req.body.descricao;
-    Pergunta.create({
+    Pergunta.create({  //CREATE
         titulo: titulo,
         descricao: descricao
     }).then(() => {
