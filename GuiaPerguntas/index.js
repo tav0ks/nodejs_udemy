@@ -42,11 +42,28 @@ app.get("/perguntar", (req, res) => {
 app.post("/salvarpergunta", (req, res) => {
     var titulo = req.body.titulo;
     var descricao = req.body.descricao;
-    Pergunta.create({  //CREATE
-        titulo: titulo,
-        descricao: descricao
-    }).then(() => {
-        res.redirect("/");
+    if (titulo === "" || descricao === "") {
+        res.render("camposvazios");
+    } else {
+        Pergunta.create({  //CREATE
+            titulo: titulo,
+            descricao: descricao
+        }).then(() => {
+            res.redirect("/");
+        });
+    };
+});
+
+app.get("/pergunta/:id", (req, res) => {
+    var id = req.params.id;
+    Pergunta.findOne({
+        where: { id: id }
+    }).then(pergunta => {
+        if (pergunta != undefined) {
+            res.render("pergunta");
+        } else {
+            res.redirect("/");
+        }
     });
 });
 
