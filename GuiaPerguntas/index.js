@@ -24,7 +24,11 @@ app.use(bodyParser.json()); // transforma dados do formulario json para javascri
 
 //rotas
 app.get("/", (req, res) => {
-    Pergunta.findAll({ raw: true }).then(perguntas => { //SELECT
+    Pergunta.findAll({ //SELECT
+        raw: true, order: [
+            ['id', 'DESC'] // ASC = CRESCENTE || DESC = DECRESCENTE
+        ]
+    }).then(perguntas => {
         res.render("index", {
             perguntas: perguntas
         });
