@@ -20,7 +20,7 @@ app.set('view engine', 'ejs'); // definindo o ejs como view engine do express
 app.use(express.static('public')); // define a pasta de arquivos estaticos do express
 
 //body parser
-app.use(bodyParser.urlencoded({ extended: false })); // transforma dados do formulario HTML em arquivo javascript
+app.use(bodyParser.urlencoded({ extended: false })); // transforma dados do formulario HTML em estrutura javascript
 app.use(bodyParser.json()); // transforma dados do formulario json para javascript
 
 //rotas
@@ -43,16 +43,12 @@ app.get("/perguntar", (req, res) => {
 app.post("/salvarpergunta", (req, res) => {
     var titulo = req.body.titulo;
     var descricao = req.body.descricao;
-    if (titulo === "" || descricao === "") {
-        res.render("camposvazios");
-    } else {
-        Pergunta.create({  //CREATE
-            titulo: titulo,
-            descricao: descricao
-        }).then(() => {
-            res.redirect("/");
-        });
-    };
+    Pergunta.create({  //CREATE
+        titulo: titulo,
+        descricao: descricao
+    }).then(() => {
+        res.redirect("/");
+    });
 });
 
 app.get("/pergunta/:id", (req, res) => {
@@ -67,6 +63,28 @@ app.get("/pergunta/:id", (req, res) => {
                 order: [['id', 'DESC']]
             }).then(respostas => {
                 res.render("pergunta", {
+                    pergunta: pergunta,
+                    respostas: respostas
+                });
+            });
+        } else {
+            res.redirect("/");
+        }
+    });
+});
+
+app.get("/perguntavazia/:id", (req, res) => {
+    var id = req.params.id;
+    Pergunta.findOne({
+        where: { id: id }
+    }).then(pergunta => {
+        if (pergunta != undefined) {
+
+            Resposta.findAll({
+                where: { perguntaId: pergunta.id },
+                order: [['id', 'DESC']]
+            }).then(respostas => {
+                res.render("perguntavazio", {
                     pergunta: pergunta,
                     respostas: respostas
                 });

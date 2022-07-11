@@ -10,12 +10,14 @@
             <div class="card-body">
                 <form method="POST" action="/salvarpergunta">
                     <label>Título</label>
-                    <input type="text" placeholder="Título" class="form-control" name="titulo">
+                    <input type="text" placeholder="Título" class="form-control" name="titulo" autocomplete="off"
+                        required>
                     <br>
                     <label>Descrição</label>
-                    <textarea placeholder="Descreva sua pergunta" class="form-control" name="descricao"></textarea>
+                    <textarea placeholder="Descreva sua pergunta" class="form-control" name="descricao"
+                        required></textarea>
                     <br>
-                    <button class="btn btn-primary">Perguntar</button>
+                    <button class="btn btn-success">Perguntar</button>
                 </form>
             </div>
         </div>
